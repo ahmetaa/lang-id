@@ -47,7 +47,7 @@ public class LanguageIdentifier {
      */
     public static LanguageIdentifier fromInternalModelGroup(String groupId) throws IOException {
         Set<String> languages = Sets.newHashSet();
-        String languageList = "/models/langid/" + groupId + "/langs.txt";
+        String languageList = "/models/" + groupId + "/langs.txt";
         try (InputStream is = Resources.getResource(LanguageIdentifier.class, languageList).openStream()) {
             String langLine = SimpleTextReader.trimmingReader(is, "utf-8").asString().trim();
             for (String langStr : Splitter.on(",").omitEmptyStrings().trimResults().split(langLine)) {
@@ -58,7 +58,7 @@ public class LanguageIdentifier {
             throw new IllegalArgumentException("No language is provided!");
         Map<String, CharNgramLanguageModel> map = Maps.newHashMap();
         for (String language : languages) {
-            String resourceName = "/models/langid/" + groupId + "/" + language + ".clm";
+            String resourceName = "/models/" + groupId + "/" + language + ".clm";
             InputStream is = Resources.getResource(LanguageIdentifier.class, resourceName).openStream();
             if (is == null)
                 throw new IllegalArgumentException("No internal model found: " + resourceName);
@@ -79,7 +79,7 @@ public class LanguageIdentifier {
         Map<String, CharNgramLanguageModel> map = Maps.newHashMap();
         Set<String> langs = Sets.newHashSet(languages);
         for (String language : langs) {
-            String resourceName = "/models/langid/compressed/" + language + ".clm";
+            String resourceName = "/models/compressed/" + language + ".clm";
             InputStream is = Resources.getResource(LanguageIdentifier.class, resourceName).openStream();
             if (is == null)
                 throw new IllegalArgumentException("No internal model found: " + resourceName);
